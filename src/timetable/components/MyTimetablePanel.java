@@ -20,11 +20,11 @@ public class MyTimetablePanel extends JPanel {
 
         setLayout(new BorderLayout());
 
-        JLabel table1 = SimulatorComponentFactory.getInstance().createImageLabel("/images/timetable1.png",
+        JLabel table1 = SimulatorComponentFactory.getInstance().createImageLabel("/screenshots/timetable1.png",
                 0, 0, 700, 300);
         add(table1, BorderLayout.NORTH);
 
-        JLabel table2 = SimulatorComponentFactory.getInstance().createImageLabel("/images/timetable2.png",
+        JLabel table2 = SimulatorComponentFactory.getInstance().createImageLabel("/screenshots/timetable2.png",
                 0, 0, 700, 300);
         add(table2, BorderLayout.CENTER);
 
