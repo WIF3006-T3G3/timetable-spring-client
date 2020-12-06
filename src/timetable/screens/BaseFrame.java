@@ -1,4 +1,4 @@
-package timetable.components;
+package timetable.screens;
 
 import javax.swing.*;
 import java.awt.*;
@@ -29,7 +29,7 @@ public abstract class BaseFrame extends JFrame {
         // Frame configuration
         getContentPane().setBackground(Color.white);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(1000, 800);
+        setSize(800, 600);
         Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         this.setLocation(dim.width / 2 - this.getSize().width / 2, dim.height / 2 - this.getSize().height / 2);
         setResizable(false);

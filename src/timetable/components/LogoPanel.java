@@ -16,7 +16,7 @@ public class LogoPanel extends JPanel {
     public LogoPanel() {
         super();
         JLabel logo = SimulatorComponentFactory.getInstance().createImageLabel("/images/logo.png",
-                0, 0, 300, 300);
+                0, 0, 200, 200);
         add(logo);
         setBackground(Color.white);
     }
