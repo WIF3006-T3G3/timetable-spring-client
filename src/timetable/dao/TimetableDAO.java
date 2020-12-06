@@ -6,6 +6,7 @@ import timetable.dto.Timetable;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
+import java.util.ArrayList;
 
 public class TimetableDAO {
     public final String PATH = "dat\\timetable.json";
@@ -19,5 +20,16 @@ public class TimetableDAO {
             e.printStackTrace();
             return new Timetable[]{};
         }
+    }
+
+    public ArrayList<String> getDistinctCodes() {
+        Timetable[] table = getTimetables();
+        ArrayList<String> code = new ArrayList<>();
+        for (Timetable t : table) {
+            if (!code.contains(t.getCode())) {
+                code.add(t.getCode());
+            }
+        }
+        return code;
     }
 }

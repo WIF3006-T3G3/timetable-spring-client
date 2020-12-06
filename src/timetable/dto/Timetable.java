@@ -1,7 +1,11 @@
 package timetable.dto;
 
 public class Timetable {
-    String id, code, groups, lecturerCode, location, start, end, types;
+    private String id, code, groups, lecturerCode, location, start, end, types;
+
+    public String getCode() {
+        return code;
+    }
 
     @Override
     public String toString() {
