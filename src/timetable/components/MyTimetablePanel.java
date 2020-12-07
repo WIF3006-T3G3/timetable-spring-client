@@ -1,8 +1,6 @@
 package timetable.components;
 
-import timetable.Main;
 import timetable.factory.SimulatorComponentFactory;
-import timetable.screens.MainMenuFrame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,12 +25,5 @@ public class MyTimetablePanel extends JPanel {
         JLabel table2 = SimulatorComponentFactory.getInstance().createImageLabel("/screenshots/timetable2.png",
                 0, 0, 700, 300);
         add(table2, BorderLayout.CENTER);
-
-        JButton backButton = SimulatorComponentFactory.getInstance().createButton("Back");
-        add(backButton, BorderLayout.SOUTH);
-        backButton.addActionListener((evt) -> {
-            // navigate to main menu
-            Main.navigate(new MainMenuFrame());
-        });
     }
 }

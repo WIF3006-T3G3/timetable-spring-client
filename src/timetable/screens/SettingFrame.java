@@ -1,6 +1,6 @@
 package timetable.screens;
 
-import timetable.components.SettingPanel;
+import timetable.components.TimetablePanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,7 +11,7 @@ import java.awt.*;
 public class SettingFrame extends BaseFrame {
     @Override
     public void createComponents() {
-        JPanel panel = new SettingPanel();
+        JPanel panel = new TimetablePanel();
         add(panel, BorderLayout.CENTER);
     }
 }
