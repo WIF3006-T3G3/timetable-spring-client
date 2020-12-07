@@ -1,5 +1,8 @@
 package timetable.components;
 
+import timetable.controller.SearchController;
+import timetable.dao.TimetableDAO;
+import timetable.dto.Timetable;
 import timetable.factory.SimulatorComponentFactory;
 
 import javax.swing.*;
@@ -17,9 +20,7 @@ public class TimetablePanel extends JPanel {
         GridBagConstraints gbc = new GridBagConstraints();
 
         // search bar
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        JPanel searchPanel = new SearchPanel();
+        SearchPanel searchPanel = new SearchPanel();
         add(searchPanel, gbc);
 
         // search title
@@ -29,12 +30,13 @@ public class TimetablePanel extends JPanel {
         add(searchTitle, gbc);
 
         // search list
+        TimetableDAO timetableDAO = new TimetableDAO();
+        ListPanel searchList = new ListPanel();
         gbc.gridy = 2;
-        JPanel searchList = new RoundedPanel(10, Color.decode("#999999"));
-        searchList.setLayout(new BoxLayout(searchList, BoxLayout.Y_AXIS));
-        searchList.add(new JLabel("okok"));
-        searchList.setPreferredSize(new Dimension(600, 200));
         add(searchList, gbc);
+
+        searchPanel.getButton().addActionListener(new SearchController(searchPanel.getCodeCombo(),
+                searchPanel.getTypeCombo(), searchList, timetableDAO));
 
         // selected title
         gbc.gridy = 3;
@@ -42,12 +44,10 @@ public class TimetablePanel extends JPanel {
         add(selectedTitle, gbc);
 
         // selected list
+        JPanel selectedList = new ListPanel();
         gbc.gridy = 4;
-        JPanel selectedList = new RoundedPanel(10, Color.decode("#999999"));
-        selectedList.setLayout(new BoxLayout(selectedList, BoxLayout.Y_AXIS));
-        selectedList.add(new JLabel("okok"));
-        selectedList.setPreferredSize(new Dimension(600, 200));
         add(selectedList, gbc);
+
 //        leftTable = new SettingTable(new TimetableDAO().getDistinctCodes());
 //        add(leftTable, BorderLayout.WEST);
 //
