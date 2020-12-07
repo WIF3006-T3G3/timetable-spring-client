@@ -20,16 +20,18 @@ public class MainMenuFrame extends BaseFrame {
         // nav bar
         gbc.gridx = 0;
         gbc.gridy = 0;
+        gbc.insets = new Insets(20,5,20,5);
         JPanel navPanel = new NavPanel();
         mainPanel.add(navPanel, gbc);
 
         // main content
         gbc.gridx = 0;
         gbc.gridy = 1;
+        gbc.insets = new Insets(0,5,20,5);
         TimetablePanel timetablePanel = new TimetablePanel();
         mainPanel.add(timetablePanel, gbc);
 
-        add(mainPanel, BorderLayout.NORTH);
+        add(new JScrollPane(mainPanel), BorderLayout.CENTER);
         mainPanel.setBackground(Color.white);
         setBackground(Color.white);
     }

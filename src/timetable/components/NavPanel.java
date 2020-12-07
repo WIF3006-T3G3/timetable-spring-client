@@ -15,8 +15,7 @@ public class NavPanel extends JPanel {
      */
     public NavPanel() {
         super();
-        GridBagLayout layout = new GridBagLayout();
-        setLayout(layout);
+        setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
 
         gbc.gridx = 0;

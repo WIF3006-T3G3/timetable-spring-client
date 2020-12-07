@@ -1,16 +1,10 @@
 package timetable.components;
 
-import timetable.Main;
-import timetable.dao.TimetableDAO;
 import timetable.factory.SimulatorComponentFactory;
-import timetable.screens.MainMenuFrame;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
 
 /**
  * @author Chin Jia Xiong
@@ -19,27 +13,41 @@ public class TimetablePanel extends JPanel {
     SettingTable leftTable, rightTable;
 
     public TimetablePanel() {
-        setLayout(new GridLayout(3, 1));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // search bar
-        JPanel searchBar = new JPanel();
-        JLabel codeLabel = SimulatorComponentFactory.getInstance().createLabel("Course Code");
-        JComboBox<String> codeCombo = new JComboBox<>();
-        for (String i : new TimetableDAO().getDistinctCodes())
-            codeCombo.addItem(i);
-        JLabel groupLabel = SimulatorComponentFactory.getInstance().createLabel("Group");
-        JComboBox<String> groupCombo = new JComboBox<>();
-        for (String i : new TimetableDAO().getDistinctCodes())
-            groupCombo.addItem(i);
-        JButton button = SimulatorComponentFactory.getInstance().createButton("Search");
-        searchBar.add(codeLabel);
-        searchBar.add(codeCombo);
-        searchBar.add(groupLabel);
-        searchBar.add(groupCombo);
-        searchBar.add(button);
-        searchBar.setBackground(Color.white);
-        add(searchBar);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        JPanel searchPanel = new SearchPanel();
+        add(searchPanel, gbc);
 
+        // search title
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        JLabel searchTitle = SimulatorComponentFactory.getInstance().createLabel("Search Result");
+        add(searchTitle, gbc);
+
+        // search list
+        gbc.gridy = 2;
+        JPanel searchList = new RoundedPanel(10, Color.decode("#999999"));
+        searchList.setLayout(new BoxLayout(searchList, BoxLayout.Y_AXIS));
+        searchList.add(new JLabel("okok"));
+        searchList.setPreferredSize(new Dimension(600, 200));
+        add(searchList, gbc);
+
+        // selected title
+        gbc.gridy = 3;
+        JLabel selectedTitle = SimulatorComponentFactory.getInstance().createLabel("Selected");
+        add(selectedTitle, gbc);
+
+        // selected list
+        gbc.gridy = 4;
+        JPanel selectedList = new RoundedPanel(10, Color.decode("#999999"));
+        selectedList.setLayout(new BoxLayout(selectedList, BoxLayout.Y_AXIS));
+        selectedList.add(new JLabel("okok"));
+        selectedList.setPreferredSize(new Dimension(600, 200));
+        add(selectedList, gbc);
 //        leftTable = new SettingTable(new TimetableDAO().getDistinctCodes());
 //        add(leftTable, BorderLayout.WEST);
 //
