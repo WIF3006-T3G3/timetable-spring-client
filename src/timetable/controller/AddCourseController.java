@@ -9,6 +9,7 @@ import timetable.model.CourseModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  * Handler for adding new component into the drawing panel.
@@ -30,6 +31,7 @@ public class AddCourseController implements PropertyChangeListener {
         if (evt.getPropertyName().equals(Events.ADD_COURSE)) {
             Course course = (Course) evt.getNewValue();
             courseModel.getSelectedCourses().add(course);
+            Collections.sort(courseModel.getSelectedCourses());
             // update list
             selectedList.update(courseModel.getSelectedCourses());
             // clean up search list

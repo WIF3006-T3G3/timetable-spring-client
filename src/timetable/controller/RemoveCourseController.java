@@ -8,6 +8,7 @@ import timetable.model.CourseModel;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 /**
@@ -32,6 +33,7 @@ public class RemoveCourseController implements PropertyChangeListener {
                     c -> !c.getID().equals(course.getID()))
                     .collect(Collectors.toList());
             courseModel.setSelectedCourses(filteredCourses);
+            Collections.sort(courseModel.getSelectedCourses());
             // update list
             selectedList.update(courseModel.getSelectedCourses());
         }
