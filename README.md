@@ -10,4 +10,4 @@
 
 4. Remove slots from the timetable.
 
-5. Save the timetable as jpg images.
+5. Persist timetable.
