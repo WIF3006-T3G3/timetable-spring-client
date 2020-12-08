@@ -4,6 +4,7 @@ import timetable.controller.AddCourseController;
 import timetable.controller.RemoveCourseController;
 import timetable.controller.SearchCoursesController;
 import timetable.dao.CourseDAO;
+import timetable.dao.TimetableDAO;
 import timetable.factory.SimulatorComponentFactory;
 import timetable.model.CourseModel;
 
@@ -16,12 +17,14 @@ import java.awt.*;
 public class TimetablePanel extends JPanel {
     CourseModel courseModel;
     CourseDAO courseDAO;
-    SettingTable leftTable, rightTable;
+    TimetableDAO timetableDAO;
 
     public TimetablePanel() {
         // init model
-        courseModel = new CourseModel();
         courseDAO = new CourseDAO();
+        timetableDAO = new TimetableDAO();
+        courseModel = new CourseModel();
+        courseModel.setSelectedCourses(timetableDAO.getTimetable());
 
         // init layout manager
         setLayout(new GridBagLayout());
@@ -49,17 +52,17 @@ public class TimetablePanel extends JPanel {
         add(selectedTitle, gbc);
 
         // init selected list
-        SelectedList selectedList = new SelectedList();
+        SelectedList selectedList = new SelectedList(courseModel.getSelectedCourses());
         gbc.gridy = 4;
         add(selectedList, gbc);
 
         // search courses event
         searchPanel.addPropertyChangeListener(new SearchCoursesController(searchList, courseDAO, courseModel));
         // add course event
-        searchList.addPropertyChangeListener(new AddCourseController(searchList, selectedList, courseModel));
+        searchList.addPropertyChangeListener(new AddCourseController(searchList, selectedList, courseModel, timetableDAO));
         // search courses event
         selectedList.addPropertyChangeListener(new SearchCoursesController(searchList, courseDAO, courseModel));
         // remove course event
-        selectedList.addPropertyChangeListener(new RemoveCourseController(selectedList, courseModel));
+        selectedList.addPropertyChangeListener(new RemoveCourseController(selectedList, courseModel, timetableDAO));
     }
 }

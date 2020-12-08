@@ -2,6 +2,7 @@ package timetable.controller;
 
 import timetable.components.SelectedList;
 import timetable.constants.Events;
+import timetable.dao.TimetableDAO;
 import timetable.dto.Course;
 import timetable.model.CourseModel;
 
@@ -18,10 +19,12 @@ public class RemoveCourseController implements PropertyChangeListener {
 
     CourseModel courseModel;
     SelectedList selectedList;
+    TimetableDAO timetableDAO;
 
-    public RemoveCourseController(SelectedList sll, CourseModel cm) {
+    public RemoveCourseController(SelectedList sll, CourseModel cm, TimetableDAO td) {
         selectedList = sll;
         courseModel = cm;
+        timetableDAO = td;
     }
 
     @Override
@@ -36,6 +39,7 @@ public class RemoveCourseController implements PropertyChangeListener {
             Collections.sort(courseModel.getSelectedCourses());
             // update list
             selectedList.update(courseModel.getSelectedCourses());
+            timetableDAO.updateTimetable(courseModel.getSelectedCourses());
         }
     }
 }

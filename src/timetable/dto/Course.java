@@ -39,7 +39,7 @@ public class Course implements Comparable<Course> {
 
     @Override
     public String toString() {
-        return String.format("%s, %s, %s, %s, %s, %s, %s, %s", id, code, groups, lecturerCode, location, start, end, types);
+        return String.format("%s : %s(%s) %s %s", code, groups, types, location, lecturerCode);
     }
 
     @Override

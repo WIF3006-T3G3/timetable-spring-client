@@ -8,7 +8,7 @@ public class WordWrapCellRenderer extends JTextArea implements TableCellRenderer
 
     // wrap each cell to fit the words
     WordWrapCellRenderer() {
-        setFont(new Font("Verdana", Font.PLAIN, 24));
+        setFont(new Font("Verdana", Font.PLAIN, 14));
         setLineWrap(true);
         setWrapStyleWord(true);
     }

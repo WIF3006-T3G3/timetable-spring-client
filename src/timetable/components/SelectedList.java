@@ -10,16 +10,13 @@ import java.util.ArrayList;
 
 public class SelectedList extends JPanel {
 
-    public SelectedList() {
+    public SelectedList(ArrayList<Course> selected) {
         super();
 
         // layout
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBackground(Color.white);
-
-        // add label indicating no search result
-        add(SimulatorComponentFactory.getInstance().createLabel("None."));
-        add(Box.createRigidArea(new Dimension(5, 40)));
+        update(selected);
     }
 
     public void update(ArrayList<Course> courses) {
