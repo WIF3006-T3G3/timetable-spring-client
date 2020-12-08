@@ -34,9 +34,13 @@ public class SelectedList extends JPanel {
             CourseCard cc = new CourseCard(course, false);
             // forward event back to parent
             cc.addPropertyChangeListener(evt -> {
-                // fire event to add course
-                if (evt.getPropertyName().equals(Events.REMOVE_COURSE))
+                // fire event to remove course and reset search
+                if (evt.getPropertyName().equals(Events.REMOVE_COURSE)) {
                     firePropertyChange(evt.getPropertyName(), null, evt.getNewValue());
+                    firePropertyChange(Events.SEARCH_COURSES, null, new String[]{
+                            course.getCode(), course.getTypes(),
+                    });
+                }
             });
             add(cc);
             add(Box.createRigidArea(new Dimension(5, 10)));

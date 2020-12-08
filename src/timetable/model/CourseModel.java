@@ -4,7 +4,6 @@ import timetable.dto.Course;
 
 import java.util.ArrayList;
 
-// TODO: persistence for selected courses
 public class CourseModel {
 
     ArrayList<Course> searchCourses, selectedCourses;
@@ -20,6 +19,10 @@ public class CourseModel {
 
     public void setSelectedCourses(ArrayList<Course> sc) {
         selectedCourses = sc;
+    }
+
+    public void setSearchCourses(ArrayList<Course> sc) {
+        searchCourses = sc;
     }
 
     public ArrayList<Course> getSearchCourses() {

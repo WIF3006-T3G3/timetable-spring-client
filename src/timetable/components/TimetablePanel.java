@@ -57,6 +57,8 @@ public class TimetablePanel extends JPanel {
         searchPanel.addPropertyChangeListener(new SearchCoursesController(searchList, courseDAO, courseModel));
         // add course event
         searchList.addPropertyChangeListener(new AddCourseController(searchList, selectedList, courseModel));
+        // search courses event
+        selectedList.addPropertyChangeListener(new SearchCoursesController(searchList, courseDAO, courseModel));
         // remove course event
         selectedList.addPropertyChangeListener(new RemoveCourseController(selectedList, courseModel));
     }

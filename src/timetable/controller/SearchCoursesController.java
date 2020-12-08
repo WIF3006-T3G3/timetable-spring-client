@@ -35,16 +35,16 @@ public class SearchCoursesController implements PropertyChangeListener {
             Course[] courses = courseDAO.getCourses();
 
             // update list panel
-            ArrayList<Course> rslt = new ArrayList<>();
+            courseModel.setSearchCourses(new ArrayList<>());
             Arrays.sort(courses, Comparator.comparing(Course::getGroups));
             for (Course c : courses) {
                 if (c.getCode().equals(data[0]) &&
                         c.getTypes().equals(data[1]) &&
                         CourseUtils.validate(c, courseModel.getSelectedCourses())) {
-                    rslt.add(c);
+                    courseModel.getSearchCourses().add(c);
                 }
             }
-            searchList.update(rslt);
+            searchList.update(courseModel.getSearchCourses());
         }
     }
 }
