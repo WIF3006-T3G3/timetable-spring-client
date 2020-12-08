@@ -1,8 +1,9 @@
 package timetable.components;
 
+import timetable.constants.Events;
 import timetable.controller.CodeComboController;
-import timetable.dao.TimetableDAO;
-import timetable.dto.Timetable;
+import timetable.dao.CourseDAO;
+import timetable.dto.Course;
 import timetable.factory.SimulatorComponentFactory;
 
 import javax.swing.*;
@@ -32,8 +33,8 @@ public class SearchPanel extends JPanel {
         // layout
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
-        TimetableDAO timetableDAO = new TimetableDAO();
-        Timetable[] tables = timetableDAO.getTimetables();
+        CourseDAO courseDAO = new CourseDAO();
+        Course[] courses = courseDAO.getCourses();
 
         gbc.gridx = 0;
         gbc.gridy = 0;
@@ -44,8 +45,8 @@ public class SearchPanel extends JPanel {
         gbc.gridx = 1;
         codeCombo = new JComboBox<>();
         ArrayList<String> codeSelected = new ArrayList<>();
-        Arrays.sort(tables, Comparator.comparing(Timetable::getCode));
-        for (Timetable t : tables)
+        Arrays.sort(courses, Comparator.comparing(Course::getCode));
+        for (Course t : courses)
             if (!codeSelected.contains(t.getCode())) {
                 codeCombo.addItem(t.getCode());
                 codeSelected.add(t.getCode());
@@ -59,22 +60,30 @@ public class SearchPanel extends JPanel {
         gbc.gridx = 3;
         typeCombo = new JComboBox<>();
         ArrayList<String> selected = new ArrayList<>();
-        Arrays.sort(tables, Comparator.comparing(Timetable::getTypes));
-        for (Timetable table : timetableDAO.getTimetables()) {
+        Arrays.sort(courses, Comparator.comparing(Course::getTypes));
+        for (Course c : courseDAO.getCourses()) {
             if (codeCombo.getSelectedItem() != null &&
-                    table.getCode().equals(codeCombo.getSelectedItem().toString()) &&
-                    !selected.contains(table.getTypes())) {
-                typeCombo.addItem(table.getTypes());
-                selected.add(table.getTypes());
+                    c.getCode().equals(codeCombo.getSelectedItem().toString()) &&
+                    !selected.contains(c.getTypes())) {
+                typeCombo.addItem(c.getTypes());
+                selected.add(c.getTypes());
             }
         }
         add(typeCombo, gbc);
 
         gbc.gridx = 4;
         button = SimulatorComponentFactory.getInstance().createButton("Search");
+        button.addActionListener((evt) -> {
+            if (codeCombo.getSelectedItem() == null || typeCombo.getSelectedItem() == null) return;
+            // fire event to search courses by code and type
+            firePropertyChange(Events.SEARCH_COURSES, null, new String[]{
+                    codeCombo.getSelectedItem().toString(), typeCombo.getSelectedItem().toString()
+            });
+        });
         add(button, gbc);
 
-        codeCombo.addActionListener(new CodeComboController(codeCombo, typeCombo, timetableDAO));
+        // when code changes, change the type options
+        codeCombo.addActionListener(new CodeComboController(codeCombo, typeCombo, courseDAO));
 
         setBackground(Color.white);
     }

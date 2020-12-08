@@ -1,8 +1,11 @@
 package timetable.dto;
 
-public class Timetable {
+public class Course {
     private String id, code, groups, lecturerCode, location, start, end, types;
-    boolean added = false;
+
+    public String getID() {
+        return id;
+    }
 
     public String getCode() {
         return code;

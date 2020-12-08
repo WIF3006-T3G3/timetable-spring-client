@@ -1,7 +1,7 @@
 package timetable.controller;
 
-import timetable.dao.TimetableDAO;
-import timetable.dto.Timetable;
+import timetable.dao.CourseDAO;
+import timetable.dto.Course;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -13,28 +13,28 @@ import java.util.Comparator;
 public class CodeComboController implements ActionListener {
 
     JComboBox<String> codeCombo, typeCombo;
-    TimetableDAO timetableDAO;
+    CourseDAO courseDAO;
 
-    public CodeComboController(JComboBox<String> cc, JComboBox<String> tc, TimetableDAO table) {
+    public CodeComboController(JComboBox<String> cc, JComboBox<String> tc, CourseDAO table) {
         codeCombo = cc;
         typeCombo = tc;
-        timetableDAO = table;
+        courseDAO = table;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         typeCombo.removeAllItems();
-        Timetable[] tables = timetableDAO.getTimetables();
+        Course[] courses = courseDAO.getCourses();
 
         // update type combo
         ArrayList<String> selected = new ArrayList<>();
-        Arrays.sort(tables, Comparator.comparing(Timetable::getTypes));
-        for (Timetable table : tables) {
+        Arrays.sort(courses, Comparator.comparing(Course::getTypes));
+        for (Course c : courses) {
             if (codeCombo.getSelectedItem() != null &&
-                    table.getCode().equals(codeCombo.getSelectedItem().toString()) &&
-                    !selected.contains(table.getTypes())) {
-                typeCombo.addItem(table.getTypes());
-                selected.add(table.getTypes());
+                    c.getCode().equals(codeCombo.getSelectedItem().toString()) &&
+                    !selected.contains(c.getTypes())) {
+                typeCombo.addItem(c.getTypes());
+                selected.add(c.getTypes());
             }
         }
     }

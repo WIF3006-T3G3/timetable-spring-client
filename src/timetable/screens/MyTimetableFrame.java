@@ -19,14 +19,14 @@ public class MyTimetableFrame extends BaseFrame {
         // nav bar
         gbc.gridx = 0;
         gbc.gridy = 0;
-        gbc.insets = new Insets(20,5,20,5);
+        gbc.insets = new Insets(20, 5, 20, 5);
         JPanel navPanel = new NavPanel();
         mainPanel.add(navPanel, gbc);
 
         // main content
         gbc.gridx = 0;
         gbc.gridy = 1;
-        gbc.insets = new Insets(0,5,20,5);
+        gbc.insets = new Insets(0, 5, 20, 5);
         JPanel timetablePanel = new MyTimetablePanel();
         mainPanel.add(timetablePanel, gbc);
 

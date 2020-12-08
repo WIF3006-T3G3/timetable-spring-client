@@ -1,7 +1,7 @@
 package timetable.dto;
 
 public class Lecturer {
-    String id, code, name, cv;
+    private String id, code, name, cv;
 
     @Override
     public String toString() {

@@ -1,13 +1,15 @@
 package timetable.components;
 
-import timetable.dto.Timetable;
+import timetable.constants.Events;
+import timetable.dto.Course;
 import timetable.factory.SimulatorComponentFactory;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class CourseCard extends JPanel {
-    public CourseCard(Timetable table) {
+
+    public CourseCard(Course course, boolean add) {
         super();
         // layout
         setLayout(new GridBagLayout());
@@ -16,32 +18,44 @@ public class CourseCard extends JPanel {
 
         gbc.gridx = 0;
         gbc.gridy = 0;
-        add(SimulatorComponentFactory.getInstance().createLabel(table.getCode()), gbc);
+        add(SimulatorComponentFactory.getInstance().createLabel(course.getCode()), gbc);
 
         gbc.gridx = 2;
         gbc.gridy = 0;
         gbc.gridheight = 3;
         gbc.insets = new Insets(0, 50, 0, 0);
-        add(SimulatorComponentFactory.getInstance().createButton("Add"), gbc);
+        JButton button = SimulatorComponentFactory.getInstance().createButton(add ? "Add" : "Remove");
+        if (add) {
+            button.addActionListener((evt) -> {
+                // fire event to add course
+                firePropertyChange(Events.ADD_COURSE, null, course);
+            });
+        } else {
+            button.addActionListener((evt) -> {
+                // fire event to remove course
+                firePropertyChange(Events.REMOVE_COURSE, null, course);
+            });
+        }
+        add(button, gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 1;
         gbc.gridheight = 1;
         gbc.insets = new Insets(0, 0, 0, 0);
-        add(SimulatorComponentFactory.getInstance().createLabel("Time: " + table.getStart() + " - " + table.getEnd()), gbc);
+        add(SimulatorComponentFactory.getInstance().createLabel("Time: " + course.getStart() + " - " + course.getEnd()), gbc);
 
         gbc.gridx = 0;
         gbc.gridy = 2;
-        add(SimulatorComponentFactory.getInstance().createLabel("Venue: " + table.getLocation()), gbc);
+        add(SimulatorComponentFactory.getInstance().createLabel("Venue: " + course.getLocation()), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 1;
         gbc.insets = new Insets(0, 50, 0, 0);
-        add(SimulatorComponentFactory.getInstance().createLabel("Lecturer: " + table.getLecturerCode()), gbc);
+        add(SimulatorComponentFactory.getInstance().createLabel("Lecturer: " + course.getLecturerCode()), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 2;
-        add(SimulatorComponentFactory.getInstance().createLabel("Group: " + table.getGroups()), gbc);
+        add(SimulatorComponentFactory.getInstance().createLabel("Group: " + course.getGroups()), gbc);
 
         setBorder(BorderFactory.createLineBorder(Color.black));
         setPreferredSize(new Dimension(700, 100));

@@ -1,144 +1,63 @@
 package timetable.components;
 
-import timetable.controller.SearchController;
-import timetable.dao.TimetableDAO;
-import timetable.dto.Timetable;
+import timetable.controller.AddCourseController;
+import timetable.controller.RemoveCourseController;
+import timetable.controller.SearchCoursesController;
+import timetable.dao.CourseDAO;
 import timetable.factory.SimulatorComponentFactory;
+import timetable.model.CourseModel;
 
 import javax.swing.*;
-import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 
 /**
  * @author Chin Jia Xiong
  */
 public class TimetablePanel extends JPanel {
+    CourseModel courseModel;
+    CourseDAO courseDAO;
     SettingTable leftTable, rightTable;
 
     public TimetablePanel() {
+        // init model
+        courseModel = new CourseModel();
+        courseDAO = new CourseDAO();
+
+        // init layout manager
         setLayout(new GridBagLayout());
+        setBackground(Color.white);
         GridBagConstraints gbc = new GridBagConstraints();
 
-        // search bar
+        // init search bar
         SearchPanel searchPanel = new SearchPanel();
         add(searchPanel, gbc);
 
-        // search title
+        // init search result label
         gbc.gridy = 1;
         gbc.anchor = GridBagConstraints.WEST;
         JLabel searchTitle = SimulatorComponentFactory.getInstance().createLabel("Search Result");
         add(searchTitle, gbc);
 
-        // search list
-        TimetableDAO timetableDAO = new TimetableDAO();
-        ListPanel searchList = new ListPanel();
+        // init search result list
+        SearchList searchList = new SearchList();
         gbc.gridy = 2;
         add(searchList, gbc);
 
-        searchPanel.getButton().addActionListener(new SearchController(searchPanel.getCodeCombo(),
-                searchPanel.getTypeCombo(), searchList, timetableDAO));
-
-        // selected title
+        // init selected title
         gbc.gridy = 3;
         JLabel selectedTitle = SimulatorComponentFactory.getInstance().createLabel("Selected");
         add(selectedTitle, gbc);
 
-        // selected list
-        JPanel selectedList = new ListPanel();
+        // init selected list
+        SelectedList selectedList = new SelectedList();
         gbc.gridy = 4;
         add(selectedList, gbc);
 
-//        leftTable = new SettingTable(new TimetableDAO().getDistinctCodes());
-//        add(leftTable, BorderLayout.WEST);
-//
-//        JPanel arrowPanel = new JPanel();
-//        arrowPanel.setLayout(new BorderLayout());
-//        JLabel leftArrow = SimulatorComponentFactory.getInstance().createImageLabel("/images/left_arrow.png",
-//                0, 0, 60, 60);
-//        leftArrow.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent e) {
-//                onClickLeft();
-//            }
-//        });
-//        arrowPanel.add(leftArrow, BorderLayout.WEST);
-//
-//        JLabel rightArrow = SimulatorComponentFactory.getInstance().createImageLabel("/images/right_arrow.png",
-//                0, 0, 60, 60);
-//        rightArrow.addMouseListener(new MouseAdapter() {
-//            public void mouseClicked(MouseEvent e) {
-//                onClickRight();
-//            }
-//        });
-//        arrowPanel.add(rightArrow, BorderLayout.EAST);
-//        add(arrowPanel, BorderLayout.CENTER);
-//
-//        rightTable = new SettingTable(new ArrayList<>());
-//        add(rightTable, BorderLayout.EAST);
-//
-//        JPanel buttonPanel = new JPanel();
-//        buttonPanel.setLayout(new BorderLayout());
-//        JButton proceedButton = SimulatorComponentFactory.getInstance().createButton("Proceed");
-//        buttonPanel.add(proceedButton, BorderLayout.WEST);
-//        proceedButton.addActionListener((evt) -> {
-//            Main.navigate(new MainMenuFrame());
-//        });
-//
-//        JButton backButton = SimulatorComponentFactory.getInstance().createButton("Back");
-//        buttonPanel.add(backButton, BorderLayout.EAST);
-//        backButton.addActionListener((evt) -> {
-//            Main.navigate(new MainMenuFrame());
-//        });
-//        add(buttonPanel, BorderLayout.SOUTH);
-//
-        setBackground(Color.white);
-    }
-
-    private void onClickRight() {
-        JTable table1 = leftTable.getTable();
-        DefaultTableModel model1 = (DefaultTableModel) table1.getModel();
-        JTable table2 = rightTable.getTable();
-        DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
-
-        int row = table1.getSelectedRow();
-        if (row != -1) {
-            if (table1.getRowSorter() != null)
-                row = table1.getRowSorter().convertRowIndexToModel(row);
-            if (row != -1) {
-                String item = model1.getValueAt(row, 0).toString();
-                model1.removeRow(row);
-                model2.addRow(new Object[]{item});
-            }
-        }
-    }
-
-    private void onClickLeft() {
-        JTable table1 = leftTable.getTable();
-        DefaultTableModel model1 = (DefaultTableModel) table1.getModel();
-        JTable table2 = rightTable.getTable();
-        DefaultTableModel model2 = (DefaultTableModel) table2.getModel();
-
-        int row = table2.getSelectedRow();
-        if (row != -1) {
-            if (table2.getRowSorter() != null)
-                row = table2.getRowSorter().convertRowIndexToModel(row);
-            if (row != -1) {
-                String item = model2.getValueAt(row, 0).toString();
-                model2.removeRow(row);
-                model1.addRow(new Object[]{item});
-            }
-        }
-    }
-
-    private void onProceed() {
-//        if (jTable2.getRowCount() == 0)
-//            JOptionPane.showMessageDialog(this, "You need to specify course code to display!");
-//        else {
-//            String[] items = new String[jTable2.getRowCount()];
-//            for (int i = 0; i < jTable2.getRowCount(); i++) {
-//                items[i] = model2.getValueAt(i, 0).toString();
-//            }
-//            BetterTimetable.go(items);
-//            this.dispose();
-//        }
+        // search courses event
+        searchPanel.addPropertyChangeListener(new SearchCoursesController(searchList, courseDAO, courseModel));
+        // add course event
+        searchList.addPropertyChangeListener(new AddCourseController(searchList, selectedList, courseModel));
+        // remove course event
+        selectedList.addPropertyChangeListener(new RemoveCourseController(selectedList, courseModel));
     }
 }
