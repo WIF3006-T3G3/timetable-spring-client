@@ -1,5 +1,7 @@
 package timetable.controller;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import timetable.components.SearchList;
 import timetable.constants.Events;
 import timetable.dao.CourseDAO;
@@ -35,13 +37,17 @@ public class SearchCoursesController implements PropertyChangeListener {
             String[] data = (String[]) evt.getNewValue();
             Course[] courses = courseDAO.getCourses();
 
+            // get course spring bean
+            ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+            CourseUtils courseUtils = (CourseUtils) context.getBean("courseUtilsBean");
+
             // update list panel
             courseModel.setSearchCourses(new ArrayList<>());
             Arrays.sort(courses, Comparator.comparing(Course::getGroups));
             for (Course c : courses) {
                 if (c.getCode().equals(data[0]) &&
                         c.getTypes().equals(data[1]) &&
-                        CourseUtils.validate(c, courseModel.getSelectedCourses())) {
+                        courseUtils.validate(c, courseModel.getSelectedCourses())) {
                     courseModel.getSearchCourses().add(c);
                 }
             }

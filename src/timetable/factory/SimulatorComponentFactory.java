@@ -1,5 +1,7 @@
 package timetable.factory;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import timetable.utility.ImageUtils;
 
 import javax.swing.*;
@@ -43,7 +45,11 @@ public class SimulatorComponentFactory implements AbstractComponentFactory {
 
     @Override
     public JButton createIconButton(String path) {
-        JButton button = new JButton(ImageUtils.getScaledImageIcon(getClass().getResource(path), 180, 180));
+        // get image spring bean
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        ImageUtils imageUtils = (ImageUtils) context.getBean("imageUtilsBean");
+
+        JButton button = new JButton(imageUtils.getScaledImageIcon(getClass().getResource(path), 180, 180));
         button.setBackground(Color.decode("#F8F8F8"));
         return button;
     }
@@ -57,7 +63,11 @@ public class SimulatorComponentFactory implements AbstractComponentFactory {
     }
 
     public JLabel createImageLabel(String path, int x, int y, int w, int h) {
-        ImageIcon image = ImageUtils.getScaledImageIcon(getClass().getResource(path), w, h);
+        // get image spring bean
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        ImageUtils imageUtils = (ImageUtils) context.getBean("imageUtilsBean");
+
+        ImageIcon image = imageUtils.getScaledImageIcon(getClass().getResource(path), w, h);
         JLabel imageLabel = new JLabel(image);
         Dimension size = imageLabel.getPreferredSize();
         imageLabel.setBounds(x, y, size.width, size.height);
