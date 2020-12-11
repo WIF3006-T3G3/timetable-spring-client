@@ -1,6 +1,5 @@
 package timetable.model;
 
-import timetable.dao.TimetableDAO;
 import timetable.dto.Course;
 
 import java.util.ArrayList;
