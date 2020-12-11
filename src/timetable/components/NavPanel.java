@@ -13,7 +13,7 @@ public class NavPanel extends JPanel {
     /**
      * Initialize the title with white background
      */
-    public NavPanel() {
+    public NavPanel(String active) {
         super();
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -27,7 +27,7 @@ public class NavPanel extends JPanel {
         // buttons panel
         gbc.gridx = 0;
         gbc.gridy = 1;
-        JPanel buttonsPanel = new MenuButtonsPanel();
+        JPanel buttonsPanel = new MenuButtonsPanel(active);
         add(buttonsPanel, gbc);
 
         setBackground(Color.white);

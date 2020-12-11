@@ -80,6 +80,8 @@ public class SearchPanel extends JPanel {
                     codeCombo.getSelectedItem().toString(), typeCombo.getSelectedItem().toString()
             });
         });
+        button.setBackground(Color.decode("#D13838"));
+        button.setForeground(Color.white);
         add(button, gbc);
 
         // when code changes, change the type options
