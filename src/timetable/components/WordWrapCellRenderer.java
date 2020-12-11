@@ -18,11 +18,12 @@ public class WordWrapCellRenderer extends JTextArea implements TableCellRenderer
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         try {
             setText(value.toString());
-            this.setBackground(new Color(113, 170, 186));
-            if (value.toString().equals("")) this.setBackground(new Color(123, 222, 159));
+            setBackground(Color.decode("#D13838"));
+            setForeground(Color.white);
+            if (value.toString().equals("")) setBackground(Color.white);
         } catch (Exception e) {
             setText("");
-            this.setBackground(new Color(123, 222, 159));
+            setBackground(Color.white);
         }
         return this;
     }

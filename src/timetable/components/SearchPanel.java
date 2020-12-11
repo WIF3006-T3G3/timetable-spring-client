@@ -31,18 +31,14 @@ public class SearchPanel extends JPanel {
 
     public SearchPanel() {
         // layout
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
+        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
         CourseDAO courseDAO = new CourseDAO();
         Course[] courses = courseDAO.getCourses();
 
-        gbc.gridx = 0;
-        gbc.gridy = 0;
-        gbc.insets = new Insets(0, 5, 0, 5);
         JLabel codeLabel = SimulatorComponentFactory.getInstance().createLabel("Course Code");
-        add(codeLabel, gbc);
+        add(codeLabel);
+        add(Box.createRigidArea(new Dimension(20, 5)));
 
-        gbc.gridx = 1;
         codeCombo = new JComboBox<>();
         ArrayList<String> codeSelected = new ArrayList<>();
         Arrays.sort(courses, Comparator.comparing(Course::getCode));
@@ -51,13 +47,13 @@ public class SearchPanel extends JPanel {
                 codeCombo.addItem(t.getCode());
                 codeSelected.add(t.getCode());
             }
-        add(codeCombo, gbc);
+        add(codeCombo);
+        add(Box.createRigidArea(new Dimension(20, 5)));
 
-        gbc.gridx = 2;
         JLabel typeLabel = SimulatorComponentFactory.getInstance().createLabel("Type");
-        add(typeLabel, gbc);
+        add(typeLabel);
+        add(Box.createRigidArea(new Dimension(20, 5)));
 
-        gbc.gridx = 3;
         typeCombo = new JComboBox<>();
         ArrayList<String> selected = new ArrayList<>();
         Arrays.sort(courses, Comparator.comparing(Course::getTypes));
@@ -69,9 +65,9 @@ public class SearchPanel extends JPanel {
                 selected.add(c.getTypes());
             }
         }
-        add(typeCombo, gbc);
+        add(typeCombo);
+        add(Box.createRigidArea(new Dimension(20, 5)));
 
-        gbc.gridx = 4;
         button = SimulatorComponentFactory.getInstance().createButton("Search");
         button.addActionListener((evt) -> {
             if (codeCombo.getSelectedItem() == null || typeCombo.getSelectedItem() == null) return;
@@ -82,7 +78,7 @@ public class SearchPanel extends JPanel {
         });
         button.setBackground(Color.decode("#D13838"));
         button.setForeground(Color.white);
-        add(button, gbc);
+        add(button);
 
         // when code changes, change the type options
         codeCombo.addActionListener(new CodeComboController(codeCombo, typeCombo, courseDAO));

@@ -25,6 +25,8 @@ public class CourseCard extends JPanel {
         gbc.gridheight = 3;
         gbc.insets = new Insets(0, 50, 0, 0);
         JButton button = SimulatorComponentFactory.getInstance().createButton(add ? "Add" : "Remove");
+        button.setBackground(Color.decode("#D13838"));
+        button.setForeground(Color.white);
         if (add) {
             button.addActionListener((evt) -> {
                 // fire event to add course
