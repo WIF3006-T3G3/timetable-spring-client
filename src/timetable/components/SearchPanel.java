@@ -1,5 +1,7 @@
 package timetable.components;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import timetable.constants.Events;
 import timetable.controller.CodeComboController;
 import timetable.dao.CourseDAO;
@@ -32,7 +34,9 @@ public class SearchPanel extends JPanel {
     public SearchPanel() {
         // layout
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        CourseDAO courseDAO = new CourseDAO();
+        // get course dao spring bean
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        CourseDAO courseDAO = (CourseDAO) context.getBean("courseDAOBean");
         Course[] courses = courseDAO.getCourses();
 
         JLabel codeLabel = SimulatorComponentFactory.getInstance().createLabel("Course Code");

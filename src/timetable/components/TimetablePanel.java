@@ -1,5 +1,7 @@
 package timetable.components;
 
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import timetable.controller.AddCourseController;
 import timetable.controller.RemoveCourseController;
 import timetable.controller.SearchCoursesController;
@@ -21,8 +23,11 @@ public class TimetablePanel extends JPanel {
 
     public TimetablePanel() {
         // init model
-        courseDAO = new CourseDAO();
-        timetableDAO = new TimetableDAO();
+        // get course dao spring bean
+        ApplicationContext context = new ClassPathXmlApplicationContext("Beans.xml");
+        courseDAO = (CourseDAO) context.getBean("courseDAOBean");
+        // get timetable dao spring bean
+        timetableDAO = (TimetableDAO) context.getBean("timetableDAOBean");
         courseModel = new CourseModel();
         courseModel.setSelectedCourses(timetableDAO.getTimetable());
 
